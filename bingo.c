@@ -6,6 +6,7 @@
 int tablePlayer1[4][4], tablePlayer2[4][4];
 int bingoNumbers[60];
 
+
 bool alreadyExists(int table[16], int tableNumber) {
     bool exist = false;
     int count;
@@ -19,6 +20,7 @@ bool alreadyExists(int table[16], int tableNumber) {
     return exist;
 }
 
+
 bool nonRepeat(int randomNumbers[60], int randomNumer) {
     bool repeated = false;
     int count;
@@ -31,6 +33,7 @@ bool nonRepeat(int randomNumbers[60], int randomNumer) {
 
     return repeated;
 }
+
 
 int resetNumbers() {
     int i, j;
@@ -48,6 +51,7 @@ int resetNumbers() {
 
     return 0;
 }
+
 
 int generateNumbers() {
     int i, j, count = 0;
@@ -102,17 +106,21 @@ int generateNumbers() {
     return 0;
 }
 
+
 int main() {
     resetNumbers();
     generateNumbers();
-
-
+    
     // Declaração das variaveis de controle e do contador
     char proceed;
+    int winner;
     int i, j, count = 0;
     int pointPlayer1 = 0, pointPlayer2 = 0;
 
     // Exibição dos valores da tabela dos dois jogadores
+
+    printf("\tCartelas dos Jogadores\t\n");
+
     printf("\n----    Jogador 1    ----\n");
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 4; j++) {
@@ -132,7 +140,7 @@ int main() {
 
     printf("\nAperta qualquer tecla para continuar...");
     scanf("%c", &proceed);
-    system("clear"); // Limpa o console
+    system("clear");
     // Fim da exibição dos valores das tabelas dos jogadores
 
     while (pointPlayer1 <= 16 || pointPlayer2 <= 16) {
@@ -175,26 +183,61 @@ int main() {
         printf("\n\n_____________________________\n");
 
         printf("\n\nRodada numero: %d", count+1);
+        //For para exibição dos numeros sorteados até o momento
+        printf("\nOs numeros sorteados foram: ");
+        for (i = 0; i < count; i++) {
+            printf("%d ", bingoNumbers[i]);
+        }// Fim do for
+        
+        count++;
+        
         printf("\nAperte qualquer tecla para continuar...");
         scanf("%c", &proceed);
         // Fim da exibição das tabelas, pontuação e rodadas
-    
 
-        count++;
 
         // Veficação se algum dos jogadores marcou toda a tabela
         if (pointPlayer1 == 16) {
-            printf("\nO vencedor foi o Jogador 1");
+            winner = 1;
+            system("clear");
             break;
         }
 
         if (pointPlayer2 == 16) {
-            printf("\nO vencedor foi o Jogador 2");
+            winner = 2;
+            system("clear");
             break;
         }
         // Fim da verificação
+
         system("clear");
     }
-    
+
+
+    // Exibição do vencedor, de sua tabela e de todos os numero sorteados ate a rodada final
+    printf("\nO vencedor foi o Jogador %d \n", winner);
+    printf("\nA tabela do Jogador: \n");
+    if (winner == 1) {
+        for (i = 0; i < 4; i++) {
+            for (j = 0; j < 4; j++) {
+                printf("%d\t", tablePlayer1[i][j]);
+            }
+            printf("\n");
+        }
+    } else if (winner == 2) {
+        for (i = 0; i < 4; i++) {
+            for (j = 0; j < 4; j++) {
+                printf("%d\t", tablePlayer2[i][j]);
+            }
+            printf("\n");
+        }
+    }
+
+    printf("\nOs numeros sorteados em cada rodada foram: \n");
+    for (i = 0; i < count; i++) {
+        printf("Rodada %d: %d\n", i+1, bingoNumbers[i]);
+    }
+    // Fim da exibição
+
     return 0;
 }
